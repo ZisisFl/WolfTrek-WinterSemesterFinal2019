@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "318177533785",
+    "firebase_url": "https://wintersemesterfinal2019.firebaseio.com",
+    "project_id": "wintersemesterfinal2019",
+    "storage_bucket": "wintersemesterfinal2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318177533785:android:2a7ca01a7cbee49b",
+        "android_client_info": {
+          "package_name": "logismikou.texnologia.wintersemesterfinal2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318177533785-901u7vci5a82a87ct4lvblo9422n2okm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtTmtEtfEQBOicoP67ycQifp5yWKyGMm0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
