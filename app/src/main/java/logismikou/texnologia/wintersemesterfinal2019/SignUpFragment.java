@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.concurrent.Executor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpFragment extends Fragment{
 
@@ -108,47 +110,70 @@ public class SignUpFragment extends Fragment{
         else if (password.length() < 6)
             Toast.makeText(getActivity(),"Password must be at least 6 characters",Toast.LENGTH_SHORT).show();
         else
-            if (password.equals(password_ver)){
-                progressDialog.setMessage("Signing up...");
-                progressDialog.show();
+        {
+            String regx = "^[\\p{L} .'-]+$";
+            // \\p{L} is a Unicode Character Property that matches any kind of letter from any language
+            Pattern pattern = Pattern.compile(regx);
 
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()){
-                            // user is successfully registered
-                            Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
-                            // write users display name
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            String diplay_name = firstname_sign_up.getText().toString() +
-                                    " " + surname_sign_up.getText().toString();
+            CharSequence firstname_check = firstname_sign_up.getText().toString();
+            Matcher matcher1 = pattern.matcher(firstname_check);
 
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(diplay_name).build();
+            CharSequence surname_check = surname_sign_up.getText().toString();
+            Matcher matcher2 = pattern.matcher(surname_check);
 
-                            user.updateProfile(profileUpdates);
-                            // return to account fragment
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
-                                    new AccountFragment()).commit();
-                        }
-                        else{
-                            // check if there is already an account on this email
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(getActivity(), "User with this email already exist.", Toast.LENGTH_SHORT).show();
-                            }
-                            else if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
-                                Toast.makeText(getActivity(), "Wrong email format.", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(getActivity(),"Error: Could not register",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            if(!matcher1.matches())
+            {
+                Toast.makeText(getActivity(),"Invalid first name format",Toast.LENGTH_SHORT).show();
+            }
+            else if(!matcher2.matches())
+            {
+                Toast.makeText(getActivity(),"Invalid surname format",Toast.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(getActivity(),"Password fields do not match",Toast.LENGTH_SHORT).show();
+                if (password.equals(password_ver)){
+                    progressDialog.setMessage("Signing up...");
+                    progressDialog.show();
+
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+                                    if (task.isSuccessful()){
+                                        // user is successfully registered
+                                        Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
+                                        // write users display name
+                                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                                        String diplay_name = firstname_sign_up.getText().toString() +
+                                                " " + surname_sign_up.getText().toString();
+
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(diplay_name).build();
+
+                                        user.updateProfile(profileUpdates);
+                                        // return to account fragment
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
+                                                new AccountFragment()).commit();
+                                    }
+                                    else{
+                                        // check if there is already an account on this email
+                                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                            Toast.makeText(getActivity(), "User with this email already exist.", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
+                                            Toast.makeText(getActivity(), "Wrong email format.", Toast.LENGTH_SHORT).show();
+                                        else
+                                            Toast.makeText(getActivity(),"Error: Could not register",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Password fields do not match",Toast.LENGTH_SHORT).show();
+                }
             }
+        }
     }
 }

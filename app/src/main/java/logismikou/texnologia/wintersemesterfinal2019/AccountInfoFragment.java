@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AccountInfoFragment extends Fragment {
 
     Button goto_reset_email, goto_reset_password2, sign_out;
@@ -120,29 +123,51 @@ public class AccountInfoFragment extends Fragment {
                 }
                 else
                 {
-                    progressDialog.setMessage("Applying changes");
-                    progressDialog.show();
+                    String regx = "^[\\p{L} .'-]+$";
+                    // \\p{L} is a Unicode Character Property that matches any kind of letter from any language
+                    Pattern pattern = Pattern.compile(regx);
 
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    CharSequence firstname = firstname_acc_info.getText().toString();
+                    Matcher matcher1 = pattern.matcher(firstname);
 
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(firstname_acc_info.getText().toString()+" "+
-                                    surname_acc_info.getText().toString())
-                            .build();
+                    CharSequence surname = surname_acc_info.getText().toString();
+                    Matcher matcher2 = pattern.matcher(surname);
 
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    progressDialog.dismiss();
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
-                                        fields_unavailable();
+
+                    if(!matcher1.matches())
+                    {
+                        Toast.makeText(getActivity(),"Invalid first name format",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(!matcher2.matches())
+                    {
+                        Toast.makeText(getActivity(),"Invalid surname format",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        progressDialog.setMessage("Applying changes");
+                        progressDialog.show();
+
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(firstname_acc_info.getText().toString()+" "+
+                                        surname_acc_info.getText().toString())
+                                .build();
+
+                        user.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        progressDialog.dismiss();
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
+                                            fields_unavailable();
+                                        }
+                                        else
+                                            Toast.makeText(getActivity(),"Error occurred",Toast.LENGTH_SHORT).show();
                                     }
-                                    else
-                                        Toast.makeText(getActivity(),"Error occurred",Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                });
+                    }
                 }
             }
         });

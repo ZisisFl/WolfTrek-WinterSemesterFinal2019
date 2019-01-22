@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="47dp"
+            android:ems="10"
+            android:hint="Card Number"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/cvv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Security Code (CVV)"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/card_holder"
+            app:layout_constraintTop_toBottomOf="@+id/card_holder" />
+
+        <EditText
+            android:id="@+id/card_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Card Holder"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/card_number"
+            app:layout_constraintTop_toBottomOf="@+id/card_number" />
+
+        <EditText
+            android:id="@+id/exp_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Expiration Month"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/cvv"
+            app:layout_constraintTop_toBottomOf="@+id/cvv" />
+
+        <EditText
+            android:id="@+id/exp_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Expiration Year"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/exp_month"
+            app:layout_constraintTop_toBottomOf="@+id/exp_month" />
+
+        <Button
+            android:id="@+id/add_card_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="ADD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exp_year" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>
