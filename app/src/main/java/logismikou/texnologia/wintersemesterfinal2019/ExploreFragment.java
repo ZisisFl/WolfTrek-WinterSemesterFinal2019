@@ -149,7 +149,6 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
                     }
                     Log.d(TAG, "onRequestPermissionsResult: permission granted");
                     mLocationPermissionsGranted = true;
-                    getDeviceLocation();
                 }
             }
         }

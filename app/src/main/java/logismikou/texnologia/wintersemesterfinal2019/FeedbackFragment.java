@@ -1,5 +1,9 @@
 package logismikou.texnologia.wintersemesterfinal2019;
 
+import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,16 +16,34 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
+
 public class FeedbackFragment extends Fragment {
 
     Button submit_btn;
     EditText store_sug_text, gen_sug_text;
     ImageView close7;
 
+    FirebaseAuth firebaseAuth;
+    DatabaseReference mDatabase;
+
+    ProgressDialog progressDialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_feedback, container, false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        progressDialog = new ProgressDialog(getActivity());
 
         submit_btn = v.findViewById(R.id.submit_btn);
 
@@ -34,7 +56,7 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
-                        new FeedbackFragment()).commit();
+                        new ContactFragment()).commit();
             }
         });
 
@@ -54,15 +76,84 @@ public class FeedbackFragment extends Fragment {
 
         if (!store_suggestion.equals("") && general_suggestion.equals("")){
             Toast.makeText(getActivity(), "con1", Toast.LENGTH_SHORT).show();
+
             //send store suggestion
+            create_feedback_message(store_suggestion, "-");
+
+            progressDialog.setMessage("Sending feedback...");
+            progressDialog.show();
+
         }
         else if (store_suggestion.equals("") && !general_suggestion.equals("")){
             Toast.makeText(getActivity(), "con2", Toast.LENGTH_SHORT).show();
+
             //send general suggestion
+            create_feedback_message("-", general_suggestion);
+
+            progressDialog.setMessage("Sending feedback...");
+            progressDialog.show();
         }
         else if (!store_suggestion.equals("") && !general_suggestion.equals("")){
             Toast.makeText(getActivity(), "con3", Toast.LENGTH_SHORT).show();
+
             //send both
+            create_feedback_message(store_suggestion, general_suggestion);
+
+            progressDialog.setMessage("Sending feedback...");
+            progressDialog.show();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public void create_feedback_message(String store_suggestion, String general_suggestion){
+
+        // get current time
+        Date currentTime = Calendar.getInstance().getTime();
+        String c_time = currentTime.toString();
+        // get key
+        String id = mDatabase.push().getKey();
+
+        if(firebaseAuth.getCurrentUser() != null){
+            String userId = firebaseAuth.getCurrentUser().getUid();
+
+            FeedbackMessage feedbackMessage = new FeedbackMessage(userId, c_time,
+                    store_suggestion, general_suggestion);
+
+            mDatabase.child("Feedback").child(id).setValue(feedbackMessage)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(),"An error occurred",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else{
+            String user = "guest";
+
+            FeedbackMessage feedbackMessage = new FeedbackMessage(user, c_time,
+                    store_suggestion, general_suggestion);
+
+            mDatabase.child("Feedback").child(id).setValue(feedbackMessage)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(),"An error occurred",Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }
