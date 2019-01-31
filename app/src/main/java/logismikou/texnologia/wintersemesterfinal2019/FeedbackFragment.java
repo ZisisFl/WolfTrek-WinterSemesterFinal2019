@@ -75,8 +75,6 @@ public class FeedbackFragment extends Fragment {
         String general_suggestion = gen_sug_text.getText().toString();
 
         if (!store_suggestion.equals("") && general_suggestion.equals("")){
-            Toast.makeText(getActivity(), "con1", Toast.LENGTH_SHORT).show();
-
             //send store suggestion
             create_feedback_message(store_suggestion, "-");
 
@@ -85,8 +83,6 @@ public class FeedbackFragment extends Fragment {
 
         }
         else if (store_suggestion.equals("") && !general_suggestion.equals("")){
-            Toast.makeText(getActivity(), "con2", Toast.LENGTH_SHORT).show();
-
             //send general suggestion
             create_feedback_message("-", general_suggestion);
 
@@ -94,8 +90,6 @@ public class FeedbackFragment extends Fragment {
             progressDialog.show();
         }
         else if (!store_suggestion.equals("") && !general_suggestion.equals("")){
-            Toast.makeText(getActivity(), "con3", Toast.LENGTH_SHORT).show();
-
             //send both
             create_feedback_message(store_suggestion, general_suggestion);
 

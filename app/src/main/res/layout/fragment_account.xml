@@ -94,7 +94,7 @@
                 android:layout_marginTop="16dp"
                 android:text="TextView"
                 android:textColor="@color/cast_expanded_controller_background_color"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
