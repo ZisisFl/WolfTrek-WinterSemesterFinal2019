@@ -29,7 +29,7 @@
                     android:layout_marginRight="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/close_product_preview"
                     app:srcCompat="@drawable/ic_broken_image" />
 
                 <TextView
@@ -147,7 +147,7 @@
                     app:srcCompat="@drawable/ic_add" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/close_product_preview"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -161,10 +161,43 @@
                     android:layout_marginTop="6dp"
                     android:text="Shop name"
                     android:textColor="@color/cast_expanded_controller_background_color"
-                    android:textSize="24sp"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="@+id/product_preview_img"
                     app:layout_constraintStart_toStartOf="@+id/product_preview_img"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="More products"
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_to_cart_btn" />
+
+                <Button
+                    android:id="@+id/goto_shops"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Visit more shops"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shop_image" />
+
+                <ImageView
+                    android:id="@+id/shop_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6"
+                    app:srcCompat="@drawable/ic_broken_image" />
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

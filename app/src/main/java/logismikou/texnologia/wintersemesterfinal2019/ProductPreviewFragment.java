@@ -27,8 +27,8 @@ import static android.support.constraint.Constraints.TAG;
 public class ProductPreviewFragment extends Fragment {
 
     TextView description_text, price_text, quantity_text, product_name_text, shop_name_text;
-    Button add_to_cart_btn;
-    ImageView product_preview_img, quantity_up, quantity_down;
+    Button add_to_cart_btn, goto_shops;
+    ImageView product_preview_img, quantity_up, quantity_down, shop_image, close_product_preview;
 
     DatabaseReference mDatabase;
 
@@ -47,13 +47,41 @@ public class ProductPreviewFragment extends Fragment {
         shop_name_text = v.findViewById(R.id.shop_name_text);
 
         add_to_cart_btn = v.findViewById(R.id.add_to_cart_btn);
+        goto_shops = v.findViewById(R.id.goto_shops);
 
         product_preview_img = v.findViewById(R.id.product_preview_img);
         quantity_up = v.findViewById(R.id.quantity_up);
         quantity_down = v.findViewById(R.id.quantity_down);
+        shop_image = v.findViewById(R.id.shop_image);
+        close_product_preview = v.findViewById(R.id.close_product_preview);
 
         change_quantity();
         load_product_info();
+
+        close_product_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
+                        new ShopFragment()).commit();
+            }
+        });
+
+        shop_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        goto_shops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
+                //        new ShopsHolderFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
+                                new ProductsHolderFragment()).commit();
+            }
+        });
 
         return v;
     }
@@ -72,7 +100,7 @@ public class ProductPreviewFragment extends Fragment {
 
                     // reformat decimal value
                     String price_string = new DecimalFormat("#.#").format(price_value);
-                    price_text.setText(price_string);
+                    price_text.setText(price_string+" €");
                 }
             }
         });
@@ -89,7 +117,7 @@ public class ProductPreviewFragment extends Fragment {
 
                     // reformat decimal value
                     String price_string = new DecimalFormat("#.#").format(price_value);
-                    price_text.setText(price_string);
+                    price_text.setText(price_string+" €");
                 }
             }
         });
@@ -102,19 +130,21 @@ public class ProductPreviewFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance().getReference(product_reference);
 
-        ValueEventListener get_popularListener = new ValueEventListener() {
+        ValueEventListener get_itemListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get PopularProducts object and use the values to update the UI
                 ProductInfo productInfo = dataSnapshot.getValue(ProductInfo.class);
 
-                // load image using library Picasso
+                // load  preview and shop image using library Picasso
                 Picasso.get().load(productInfo.image_url).into(product_preview_img);
+                Picasso.get().load(productInfo.shop_image_url).into(shop_image);
+
                 // load the rest of the informations
                 shop_name_text.setText(productInfo.shop_name);
                 product_name_text.setText(productInfo.name);
                 description_text.setText(productInfo.description);
-                price_text.setText(productInfo.price+"");
+                price_text.setText(productInfo.price+" €");
 
                 product_price = productInfo.price;
             }
@@ -125,6 +155,6 @@ public class ProductPreviewFragment extends Fragment {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         };
-        mDatabase.addValueEventListener(get_popularListener);
+        mDatabase.addValueEventListener(get_itemListener);
     }
 }
