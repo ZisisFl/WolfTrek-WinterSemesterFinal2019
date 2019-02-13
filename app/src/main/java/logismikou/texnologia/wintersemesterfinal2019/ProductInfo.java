@@ -8,13 +8,14 @@ public class ProductInfo {
     public float price;
     public String shop_name;
     public String shop_image_url;
+    public String reference;
 
     public ProductInfo(){
         // Default constructor required for calls to DataSnapshot.getValue(ProductInfo.class)
     }
 
     public ProductInfo(String description, String image_url, String name, float price,
-                       String shop_name, String shop_image_url){
+                       String shop_name, String shop_image_url, String reference){
 
         this.description = description;
         this.image_url = image_url;
@@ -22,6 +23,7 @@ public class ProductInfo {
         this.price = price;
         this.shop_name = shop_name;
         this.shop_image_url = shop_image_url;
+        this.reference = reference;
     }
 
     public void setDescription(String description) {

@@ -23,8 +23,15 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -33,6 +40,8 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap mGoogleMap;
     MapView mMapView;
     FusedLocationProviderClient mFusedLocationProviderClient;
+
+    DatabaseReference databaseReference;
 
     final int REQUEST_CODE = 1234;
     Boolean mLocationPermissionsGranted = false;
@@ -70,6 +79,7 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
 
         if (mLocationPermissionsGranted) {
             getDeviceLocation();
+            load_shops();
 
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
@@ -78,6 +88,46 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
             }
             mGoogleMap.setMyLocationEnabled(true);
         }
+    }
+
+    public void load_shops(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Products")
+                .child("Shops");
+
+        final ValueEventListener get_shop_latlong = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot:dataSnapshot.getChildren()){
+
+                    String shop_title = postSnapshot.getKey();
+                    String description = postSnapshot.child("Description").getValue().toString();
+                    double shop_lat = Double.parseDouble(postSnapshot.child("Location")
+                            .child("lat").getValue().toString());
+                    double shop_long = Double.parseDouble(postSnapshot.child("Location")
+                            .child("long").getValue().toString());
+
+                    add_marker(shop_title, description, shop_lat,shop_long );
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        databaseReference.addValueEventListener(get_shop_latlong);
+    }
+
+    public void add_marker(String shop_title, String description, double shop_lat, double shop_long){
+        LatLng lat_lng = new LatLng(shop_lat, shop_long);
+
+        MarkerOptions options = new MarkerOptions()
+                .position(lat_lng)
+                .title(shop_title)
+                .snippet(description);
+        mGoogleMap.addMarker(options);
     }
 
     public void getDeviceLocation(){

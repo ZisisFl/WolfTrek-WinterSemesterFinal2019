@@ -31,7 +31,7 @@ public class ShopFragment extends Fragment {
             product_price5, product_price6;
     CardView cardView1, cardView2, cardView3, cardView4, cardView5, cardView6;
 
-    String[] refrence_pop_product = new String[6];
+    String[] reference_pop_product = new String[6];
 
 
     DatabaseReference get_popular;
@@ -81,7 +81,7 @@ public class ShopFragment extends Fragment {
 
         ValueEventListener get_popularListener = new ValueEventListener() {
             //initialize counter
-            int count = 1;
+            int count = 0;
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,7 +93,7 @@ public class ShopFragment extends Fragment {
                     //loop through children and put info in a different cardviews
                     load_in_components(count, popularProducts);
                     //save reference of the product
-                    refrence_pop_product[count-1] = popularProducts.reference;
+                    reference_pop_product[count] = popularProducts.reference;
                     //update counter
                     count ++;
                 }
@@ -110,32 +110,32 @@ public class ShopFragment extends Fragment {
 
     private void load_in_components(int number, PopularProducts popularProducts){
         switch (number){
-            case 1:
+            case 0:
                 Picasso.get().load(popularProducts.image_url).into(prodImage1);
                 product_name1.setText(popularProducts.name);
                 product_price1.setText(popularProducts.price+" €");
                 break;
-            case 2:
+            case 1:
                 Picasso.get().load(popularProducts.image_url).into(prodImage2);
                 product_name2.setText(popularProducts.name);
                 product_price2.setText(popularProducts.price+" €");
                 break;
-            case 3:
+            case 2:
                 Picasso.get().load(popularProducts.image_url).into(prodImage3);
                 product_name3.setText(popularProducts.name);
                 product_price3.setText(popularProducts.price+" €");
                 break;
-            case 4:
+            case 3:
                 Picasso.get().load(popularProducts.image_url).into(prodImage4);
                 product_name4.setText(popularProducts.name);
                 product_price4.setText(popularProducts.price+" €");
                 break;
-            case 5:
+            case 4:
                 Picasso.get().load(popularProducts.image_url).into(prodImage5);
                 product_name5.setText(popularProducts.name);
                 product_price5.setText(popularProducts.price+" €");
                 break;
-            case 6:
+            case 5:
                 Picasso.get().load(popularProducts.image_url).into(prodImage6);
                 product_name6.setText(popularProducts.name);
                 product_price6.setText(popularProducts.price+" €");
@@ -197,7 +197,7 @@ public class ShopFragment extends Fragment {
         ProductPreviewFragment fragment = new ProductPreviewFragment();
         //create an bundle to send reference string of the specific product
         Bundle arguments = new Bundle();
-        arguments.putString("123", refrence_pop_product[ref_number]);
+        arguments.putString("123", reference_pop_product[ref_number]);
         fragment.setArguments(arguments);
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.main_layout, fragment);
