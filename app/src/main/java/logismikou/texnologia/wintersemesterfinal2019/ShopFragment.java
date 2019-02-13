@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class ShopFragment extends Fragment {
             product_name6, product_price1, product_price2, product_price3, product_price4,
             product_price5, product_price6;
     CardView cardView1, cardView2, cardView3, cardView4, cardView5, cardView6;
+    Button goto_shops2;
 
     String[] reference_pop_product = new String[6];
 
@@ -69,8 +71,18 @@ public class ShopFragment extends Fragment {
         cardView5 = v.findViewById(R.id.cardView5);
         cardView6 = v.findViewById(R.id.cardView6);
 
+        goto_shops2 = v.findViewById(R.id.goto_shops2);
+
         display_pop_product_info();
         choose_from_popular();
+
+        goto_shops2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
+                        new ShopsHolderFragment()).commit();
+            }
+        });
 
         return v;
     }

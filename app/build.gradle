@@ -43,5 +43,9 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:23.0.+'
     //library for image handling
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //library for qr code
+    implementation 'com.google.zxing:core:3.2.1'
+    //library for barcode encoder
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 }
 apply plugin: 'com.google.gms.google-services'

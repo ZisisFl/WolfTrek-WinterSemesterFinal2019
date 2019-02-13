@@ -193,12 +193,12 @@ public class CartFragment extends Fragment {
 
 
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ProductViewHolder extends RecyclerView.ViewHolder //implements View.OnClickListener
     {
         TextView description_view, title_view, price_view, quantity_view;
         ImageView product_image_view, delete_from_cart;
 
-        private ItemClickListener itemClickListener;
+        //private ItemClickListener itemClickListener;
 
         public ProductViewHolder(View itemView)
         {
@@ -211,16 +211,16 @@ public class CartFragment extends Fragment {
             delete_from_cart = itemView.findViewById(R.id.delete_from_cart);
             quantity_view = itemView.findViewById(R.id.quantity_view);
 
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
-            this.itemClickListener = itemClickListener;
-        }
+        //public void setItemClickListener(ItemClickListener itemClickListener){
+        //    this.itemClickListener = itemClickListener;
+        //}
 
-        @Override
-        public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition());
-        }
+        //@Override
+        //public void onClick(View v) {
+        //    itemClickListener.onClick(v, getAdapterPosition());
+        //}
     }
 }

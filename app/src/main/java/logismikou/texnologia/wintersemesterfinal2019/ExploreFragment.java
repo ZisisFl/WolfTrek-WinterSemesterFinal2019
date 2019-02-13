@@ -101,12 +101,14 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
 
                     String shop_title = postSnapshot.getKey();
                     String description = postSnapshot.child("Description").getValue().toString();
+                    String address = postSnapshot.child("Location")
+                            .child("address").getValue().toString();
                     double shop_lat = Double.parseDouble(postSnapshot.child("Location")
                             .child("lat").getValue().toString());
                     double shop_long = Double.parseDouble(postSnapshot.child("Location")
                             .child("long").getValue().toString());
 
-                    add_marker(shop_title, description, shop_lat,shop_long );
+                    add_marker(shop_title, description, address, shop_lat,shop_long );
                 }
 
             }
@@ -120,13 +122,16 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
         databaseReference.addValueEventListener(get_shop_latlong);
     }
 
-    public void add_marker(String shop_title, String description, double shop_lat, double shop_long){
+    public void add_marker(String shop_title, String description, String address,
+                           double shop_lat, double shop_long){
+
         LatLng lat_lng = new LatLng(shop_lat, shop_long);
 
         MarkerOptions options = new MarkerOptions()
                 .position(lat_lng)
                 .title(shop_title)
                 .snippet(description);
+                //.snippet(address);
         mGoogleMap.addMarker(options);
     }
 
