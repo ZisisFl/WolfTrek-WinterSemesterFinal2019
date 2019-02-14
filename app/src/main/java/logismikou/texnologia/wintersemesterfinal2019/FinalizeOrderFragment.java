@@ -141,6 +141,8 @@ public class FinalizeOrderFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
+                    layout1.setVisibility(View.VISIBLE);
+
 
                     //Toast.makeText(getActivity(), "YOLO", Toast.LENGTH_SHORT).show();
                     CreditCard creditCard = dataSnapshot.getValue(CreditCard.class);
@@ -168,9 +170,11 @@ public class FinalizeOrderFragment extends Fragment {
                     c_exp_year = creditCard.exp_year;
 
                 }
-                else{
+                else{ //if user hasn't a credit card saved
                     layout1.setVisibility(View.GONE);
                     layout3.setVisibility(View.VISIBLE);
+                    //hide close button
+                    close_new_card.setVisibility(View.GONE);
                 }
             }
 
@@ -231,8 +235,9 @@ public class FinalizeOrderFragment extends Fragment {
 
             create_order();
 
-            layout1.setVisibility(View.GONE);
             layout2.setVisibility(View.VISIBLE);
+            layout1.setVisibility(View.GONE);
+
         }
     }
 
@@ -317,6 +322,11 @@ public class FinalizeOrderFragment extends Fragment {
 
     @TargetApi(Build.VERSION_CODES.N)
     public void create_order(){
+        MyOrdersFragment fragment = new MyOrdersFragment();
+        getFragmentManager().beginTransaction()
+                .detach(fragment)
+                .commit();
+
         // get user id
         String userId = firebaseAuth.getCurrentUser().getUid();
         // create reference for orders
@@ -336,7 +346,7 @@ public class FinalizeOrderFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -346,8 +356,8 @@ public class FinalizeOrderFragment extends Fragment {
                     }
                 });
 
-        cartReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
-                .child("Cart");
+        //cartReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
+        //        .child("Cart");
 
         // delete cart after order completed
         //cartReference.removeValue();

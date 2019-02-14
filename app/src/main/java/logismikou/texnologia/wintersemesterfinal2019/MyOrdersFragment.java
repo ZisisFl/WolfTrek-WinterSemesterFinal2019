@@ -156,7 +156,10 @@ public class MyOrdersFragment extends Fragment {
                 return new MyOrdersFragment.ProductViewHolder(view);
             }
         };
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getContext(),1);
+        LinearLayoutManager  mLayoutManager = new LinearLayoutManager (getContext());
+        // bring newest first
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         order_list.setLayoutManager(mLayoutManager);
         adapter.startListening();
         order_list.setAdapter(adapter);

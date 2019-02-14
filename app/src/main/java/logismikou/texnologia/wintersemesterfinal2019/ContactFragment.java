@@ -40,7 +40,7 @@ public class ContactFragment extends Fragment {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto","abc@gmail.com", null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Contact Support");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello WolfTrek support im writing you...");
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });

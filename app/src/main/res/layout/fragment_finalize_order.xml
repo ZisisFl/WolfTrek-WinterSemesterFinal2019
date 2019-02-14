@@ -109,7 +109,7 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -155,7 +155,7 @@
             android:layout_marginTop="26dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
-            android:text="You can find your order's QR code at Account tab at My Orders"
+            android:text="You can find your order's QR code at Account tab -> My Orders"
             android:textColor="@color/cast_expanded_controller_background_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
