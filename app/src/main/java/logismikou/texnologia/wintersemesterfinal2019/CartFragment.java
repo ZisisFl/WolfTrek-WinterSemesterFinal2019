@@ -71,8 +71,9 @@ public class CartFragment extends Fragment {
         check_out_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CheckOutFragment fragment = new CheckOutFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
-                        new CheckOutFragment()).commit();
+                        fragment, "checkout_fragment").commit();
             }
         });
 

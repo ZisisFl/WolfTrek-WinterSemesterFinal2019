@@ -6,99 +6,108 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/surname_acc_info"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:ems="10"
-            android:hint="surname"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="@+id/firstname_acc_info"
-            app:layout_constraintTop_toBottomOf="@+id/firstname_acc_info" />
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/firstname_acc_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:ems="10"
-            android:hint="name"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/goto_reset_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="26dp"
-            android:text="Reset email"
-            app:layout_constraintStart_toStartOf="@+id/goto_reset_password2"
-            app:layout_constraintTop_toBottomOf="@+id/goto_reset_password2" />
+                <EditText
+                    android:id="@+id/firstname_acc_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:ems="10"
+                    android:hint="name"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/goto_reset_password2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="45dp"
-            android:text="Reset Password"
-            app:layout_constraintStart_toStartOf="@+id/surname_acc_info"
-            app:layout_constraintTop_toBottomOf="@+id/surname_acc_info" />
+                <Button
+                    android:id="@+id/goto_reset_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Reset email"
+                    app:layout_constraintStart_toStartOf="@+id/goto_reset_password2"
+                    app:layout_constraintTop_toBottomOf="@+id/goto_reset_password2" />
 
-        <Button
-            android:id="@+id/sign_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginTop="26dp"
-            android:text="Sign Out"
-            app:layout_constraintStart_toStartOf="@+id/goto_reset_email"
-            app:layout_constraintTop_toBottomOf="@+id/goto_reset_email" />
+                <ImageView
+                    android:id="@+id/edit_info_btn"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_edit" />
 
-        <ImageView
-            android:id="@+id/edit_info_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_edit" />
+                <Button
+                    android:id="@+id/goto_reset_password2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="45dp"
+                    android:text="Reset Password"
+                    app:layout_constraintStart_toStartOf="@+id/surname_acc_info"
+                    app:layout_constraintTop_toBottomOf="@+id/surname_acc_info" />
 
-        <ImageView
-            android:id="@+id/close1"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close" />
+                <ImageView
+                    android:id="@+id/save_info_btn"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_save" />
 
-        <ImageView
-            android:id="@+id/save_info_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_save" />
+                <EditText
+                    android:id="@+id/surname_acc_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:ems="10"
+                    android:hint="surname"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="@+id/firstname_acc_info"
+                    app:layout_constraintTop_toBottomOf="@+id/firstname_acc_info" />
 
-    </android.support.constraint.ConstraintLayout>
+                <Button
+                    android:id="@+id/sign_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Sign Out"
+                    app:layout_constraintStart_toStartOf="@+id/goto_reset_email"
+                    app:layout_constraintTop_toBottomOf="@+id/goto_reset_email" />
+
+                <ImageView
+                    android:id="@+id/close1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_close" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

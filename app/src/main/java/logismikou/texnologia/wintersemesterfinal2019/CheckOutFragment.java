@@ -1,6 +1,7 @@
 package logismikou.texnologia.wintersemesterfinal2019;
 
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -62,15 +63,25 @@ public class CheckOutFragment extends Fragment {
         close_order_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // destroy this fragment to avoid view error
+                CheckOutFragment myFragment = (CheckOutFragment)getFragmentManager().findFragmentByTag("checkout_fragment");
+                if(myFragment != null)
+                    getActivity().getSupportFragmentManager().beginTransaction().detach(myFragment).commit();
+
+
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
                         new CartFragment()).commit();
-                onDestroyView();
+
             }
         });
 
         place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // destroy this fragment to avoid view error
+                CheckOutFragment myFragment = (CheckOutFragment)getFragmentManager().findFragmentByTag("checkout_fragment");
+                getActivity().getSupportFragmentManager().beginTransaction().detach(myFragment).commit();
+
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
                         new FinalizeOrderFragment()).commit();
             }

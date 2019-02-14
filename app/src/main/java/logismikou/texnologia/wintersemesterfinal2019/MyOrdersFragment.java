@@ -181,8 +181,8 @@ public class MyOrdersFragment extends Fragment {
                     layout1.setVisibility(View.VISIBLE);
                     order_list.setVisibility(View.GONE);
                 }
-                int array_size = (int)number_of_orders;
-                order_qr_code = new String[array_size];
+                //int array_size = (int)number_of_orders;
+                order_qr_code = new String[10000];
 
 
                 for(DataSnapshot postSnapshot:dataSnapshot.getChildren())

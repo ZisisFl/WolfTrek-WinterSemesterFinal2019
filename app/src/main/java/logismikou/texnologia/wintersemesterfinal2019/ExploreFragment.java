@@ -130,8 +130,8 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
         MarkerOptions options = new MarkerOptions()
                 .position(lat_lng)
                 .title(shop_title)
-                .snippet(description);
-                //.snippet(address);
+                .snippet(address);
+        //.snippet(description);
         mGoogleMap.addMarker(options);
     }
 

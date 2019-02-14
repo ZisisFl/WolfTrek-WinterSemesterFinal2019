@@ -95,8 +95,9 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(firebaseAuth.getCurrentUser() != null){
+                    MyOrdersFragment fragment2 = new MyOrdersFragment();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
-                            new MyOrdersFragment()).commit();
+                            fragment2, "my_orders_fragment").commit();
                 }
                 else {
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,

@@ -117,8 +117,9 @@ public class FinalizeOrderFragment extends Fragment {
         close_finalize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CheckOutFragment fragment = new CheckOutFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,
-                        new CheckOutFragment()).commit();
+                        fragment, "checkout_fragment").commit();
             }
         });
 
@@ -322,10 +323,10 @@ public class FinalizeOrderFragment extends Fragment {
 
     @TargetApi(Build.VERSION_CODES.N)
     public void create_order(){
-        MyOrdersFragment fragment = new MyOrdersFragment();
-        getFragmentManager().beginTransaction()
-                .detach(fragment)
-                .commit();
+        MyOrdersFragment fragment2 = (MyOrdersFragment)getFragmentManager().findFragmentByTag("my_orders_fragment");
+        if(fragment2 != null)
+            getActivity().getSupportFragmentManager().beginTransaction().detach(fragment2).commit();
+
 
         // get user id
         String userId = firebaseAuth.getCurrentUser().getUid();
@@ -356,11 +357,11 @@ public class FinalizeOrderFragment extends Fragment {
                     }
                 });
 
-        //cartReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
-        //        .child("Cart");
+        cartReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
+                .child("Cart");
 
         // delete cart after order completed
-        //cartReference.removeValue();
+        cartReference.removeValue();
     }
 
     public String createQR_CODE(String id){
